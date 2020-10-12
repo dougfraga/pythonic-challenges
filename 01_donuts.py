@@ -9,12 +9,12 @@ Exemplo: donuts(5) retorna 'Number of donuts: 5'
 e donuts(23) retorna 'Number of donuts: many'
 """
 
+
 def donuts(count):
-    # +++ SUA SOLUÇÃO +++
-    return
+    return f'Number of donuts: {count if count < 10 else "many"}'
 
 
-# --- Daqui para baixo são apenas códigos auxiliáries de teste. ---
+# --- Ancillary test code ---
 
 def test(f, in_, expected):
     """
