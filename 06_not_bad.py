@@ -9,6 +9,7 @@ por 'good' e retorne a string resultante.
 Exemplo: 'The dinner is not that bad!' retorna 'The dinner is good!'
 """
 
+
 def not_bad(s):
     t1 = s.find('not')
     t2 = s.find('bad') + 3
