@@ -11,6 +11,7 @@ Dica: Isso pode ser resolvido criando 2 listas e ordenando cada uma
 antes de combina-las.
 """
 
+
 def front_x(words):
     w = sorted(words)
     x = [k for k in w if k[0] == 'x']
