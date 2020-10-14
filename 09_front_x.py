@@ -12,8 +12,11 @@ antes de combina-las.
 """
 
 def front_x(words):
-    # +++ SUA SOLUÇÃO +++
-    return
+    w = sorted(words)
+    x = [k for k in w if k[0] == 'x']
+    notx = [k for k in w if k[0] != 'x']
+    x.extend(notx)
+    return x
 
 
 # --- Daqui para baixo são apenas códigos auxiliáries de teste. ---
