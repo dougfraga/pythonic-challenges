@@ -11,11 +11,11 @@ Irá retornar: [1, 2, 3]
 
 def remove_adjacent(nums):
     adjc = []
-    side = None
+    prev = None
     for num in nums:
-        if num != side:
+        if num != prev:
             adjc.append(num)
-        side = num
+        prev = num
     return adjc
 
 
