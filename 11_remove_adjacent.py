@@ -8,9 +8,15 @@ Exemplo: [1, 2, 2, 3]
 Irá retornar: [1, 2, 3]
 """
 
+
 def remove_adjacent(nums):
-    # +++ SUA SOLUÇÃO +++
-    return
+    adjc = []
+    side = None
+    for num in nums:
+        if num != side:
+            adjc.append(num)
+        side = num
+    return adjc
 
 
 # --- Daqui para baixo são apenas códigos auxiliáries de teste. ---
