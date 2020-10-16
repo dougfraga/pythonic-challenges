@@ -17,10 +17,10 @@ def linear_merge(list1, list2):
             res.append(list1.pop(-1))
         else:
             res.append(list2.pop(-1))
-    return sorted(res)
-
+    return res[::-1]
 
 # --- Daqui para baixo são apenas códigos auxiliáries de teste. ---
+
 
 def test(f, in_, expected):
     """
