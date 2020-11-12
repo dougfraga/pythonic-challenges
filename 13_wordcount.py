@@ -57,9 +57,37 @@ import sys
 # +++ SUA SOLUÇÃO +++
 # Defina as funções print_words(filename) e print_top(filename).
 
+def print_words(filename):
+    words = open_file(filename)
+    word_list = [words[0]]
+    count_list = []
+    prev = words[0]
+    count = 1
+    for k in words[1:]:
+        if k == prev:
+            count += 1
+        else:
+            word_list.append(k)
+            count_list.append(count)
+            prev = k
+            count = 1
+    return words, word_list, count_list
+
+
+def open_file(filename):
+    with open(filename, 'r') as file:
+        data = file.read().replace('\n', ' ')
+        words = sorted(data.lower().split())
+    return words
+
+
+def print_top(filename):
+    pass
 
 # A função abaixo chama print_words() ou print_top() de acordo com os
 # parêtros do programa.
+
+
 def main():
     if len(sys.argv) != 3:
         print('Utilização: ./13_wordcount.py {--count | --topcount} file')
@@ -77,4 +105,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # main()
+    print(print_words('letras.txt'))
