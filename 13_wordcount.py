@@ -1,54 +1,29 @@
 """
 13. wordcount
 
-Este desafio é um programa que conta palavras de um arquivo qualquer de duas
-formas diferentes.
+The main() below is already defined and complete. It calls print_words()
+and print_top() functions which you write.
 
-A. Lista todas as palavras por ordem alfabética indicando suas ocorrências.
+1. For the --count flag, implement a print_words(filename) function that counts
+how often each word appears in the text and prints:
+word1 count1
+word2 count2
+...
 
-Ou seja...
+Print the above list in order sorted by word (python will sort punctuation to
+come before letters -- that's fine). Store all the words as lowercase,
+so 'The' and 'the' count as the same word.
 
-Dado um arquivo letras.txt contendo as palavras: A a C c c B b b B
-Quando você executa o programa: python wordcount.py --count letras.txt
-Ele deve imprimir todas as palavras em ordem alfabética seguidas
-do número de ocorrências.
+2. For the --topcount flag, implement a print_top(filename) which is similar
+to print_words() but which prints just the top 20 most common words sorted
+so the most common word is first, then the next most common, and so on.
 
-Por exemplo:
-
-$ python wordcount.py --count letras.txt
-a 2
-b 4
-c 3
-
-B. Lista as 20 palavras mais frequêntes indicando suas ocorrências.
-
-Ou seja...
-
-Dado um arquivo letras.txt contendo as palavras: A a C c c B b b B
-Quando você executa o programa: python wordcount.py --topcount letras.txt
-Ele deve imprimir as 20 palavras mais frequêntes seguidas
-do número de ocorrências, em ordem crescente de ocorrências.
-
-Por exemplo:
-
-$ python wordcount.py --topcount letras.txt
-b 4
-c 3
-a 2
-
-Abaixo já existe um esqueleto do programa para você preencher.
-
-Você encontrará a função main() chama as funções print_words() e
-print_top() de acordo com o parâmetro --count ou --topcount.
-
-Seu trabalho é implementar as funções print_words() e depois print_top().
-
-Dicas:
-* Armazene todas as palavras em caixa baixa, assim, as palavras 'A' e 'a'
-  contam como a mesma palavra.
-* Use str.split() (sem parêmatros) para fazer separar as palavras.
-* Não construa todo o programade uma vez. Faça por partes executando
-e conferindo cada etapa do seu progresso.
+Use str.split() (no arguments) to split on all whitespace.
+Workflow: don't build the whole program at once. Get it to an intermediate
+milestone and print your data structure and sys.exit(0).
+When that's working, try for the next milestone.
+Optional: define a helper function to avoid code duplication inside
+print_words() and print_top().
 """
 
 import sys
@@ -57,21 +32,33 @@ import sys
 # +++ SUA SOLUÇÃO +++
 # Defina as funções print_words(filename) e print_top(filename).
 
+
 def print_words(filename):
     words = open_file(filename)
-    word_list = [words[0]]
-    count_list = []
-    prev = words[0]
-    count = 1
-    for k in words[1:]:
-        if k == prev:
-            count += 1
+    counts = dict()
+
+    for word in words:
+
+        word = word.replace(".", "")
+        word = word.replace(",", "")
+        word = word.replace(";", "")
+        word = word.replace(":", "")
+        word = word.replace("?", "")
+        word = word.replace("!", "")
+        word = word.replace("(", "")
+        word = word.replace(")", "")
+        word = word.replace("(", "")
+        word = word.replace("`", "")
+        word = word.replace("'", "")
+        word = word.replace("\"", "")
+        word = word.replace("*", "")
+        word = word.replace("--", "")
+
+        if word in counts:
+            counts[word] += 1
         else:
-            word_list.append(k)
-            count_list.append(count)
-            prev = k
-            count = 1
-    return words, word_list, count_list
+            counts[word] = 1
+    return counts
 
 
 def open_file(filename):
@@ -82,28 +69,33 @@ def open_file(filename):
 
 
 def print_top(filename):
-    pass
+    words = print_words(filename)
+    sorted_dct = {k: v for k, v in sorted(words.items(), key=lambda item: item[1], reverse=True)}
+    result = []
+    for k, v in sorted_dct.items():
+        result.append((k, v))
+    return result[:20]
 
-# A função abaixo chama print_words() ou print_top() de acordo com os
-# parêtros do programa.
+
+# This basic command line argument parsing code is provided and
+# calls the print_words() and print_top() functions which you must define.
 
 
 def main():
     if len(sys.argv) != 3:
-        print('Utilização: ./13_wordcount.py {--count | --topcount} file')
+        print('usage: ./wordcount.py {--count | --topcount} file')
         sys.exit(1)
 
     option = sys.argv[1]
     filename = sys.argv[2]
     if option == '--count':
-        print_words(filename)
+        print(print_words(filename))
     elif option == '--topcount':
-        print_top(filename)
+        print(print_top(filename))
     else:
         print('unknown option: ' + option)
         sys.exit(1)
 
 
 if __name__ == '__main__':
-    # main()
-    print(print_words('letras.txt'))
+    main()
