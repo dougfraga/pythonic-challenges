@@ -29,11 +29,18 @@ print_words() and print_top().
 import sys
 
 
-# +++ SUA SOLUÇÃO +++
-# Defina as funções print_words(filename) e print_top(filename).
+# +++ SOLUTION +++
+# Define the functions print_words(filename) and print_top(filename).
 
 
-def print_words(filename):
+def open_file(filename):
+    with open(filename, 'r') as file:
+        data = file.read().replace('\n', ' ')
+        words = sorted(data.lower().split())
+    return words
+
+
+def print_words_aux(filename):
     words = open_file(filename)
     counts = dict()
 
@@ -61,20 +68,21 @@ def print_words(filename):
     return counts
 
 
-def open_file(filename):
-    with open(filename, 'r') as file:
-        data = file.read().replace('\n', ' ')
-        words = sorted(data.lower().split())
-    return words
+def print_words(filename):
+    words = print_words_aux(filename)
+    result = []
+    for k, v in words.items():
+        result.append(f'{k} {v}')
+    return '\n'.join(result)
 
 
 def print_top(filename):
-    words = print_words(filename)
+    words = print_words_aux(filename)
     sorted_dct = {k: v for k, v in sorted(words.items(), key=lambda item: item[1], reverse=True)}
     result = []
     for k, v in sorted_dct.items():
-        result.append((k, v))
-    return result[:20]
+        result.append(f'{k} {v}')
+    return '\n'.join(result[:20])
 
 
 # This basic command line argument parsing code is provided and
